@@ -220,7 +220,7 @@ function resultText(only){const nm=n=>+ls('t4m'+n)||0;const GM={2:' · Drag the 
   if(only){const m=MIS.find(x=>x.n===only);const line=m.secs?(nm(only)+' / '+m.secs.reduce((s,k)=>s+tot(k),0)+(GM[only]&&only!==3?GM[only]:'')):(GM[3].slice(2));return 'ThinkUp Year 4 · Unit 4 Time\nName: '+myName()+'\n\nMission '+only+' · '+m.title+': '+line}
   return 'ThinkUp Year 4 · Unit 4 Time\nName: '+myName()+'\n\nMission 1 · Time Units and the 24-hour Clock: '+q(1)+'\nMission 2 · Clock Studio: '+q(2)+' · Drag the Clock: '+(R.drag||0)+' / 5 rounds\nMission 3 · Speed and Memory: Time Race best score '+(R.race||'not played')+' · Memory Match '+(R.mem?R.mem+' moves':'not played')+'\nMission 4 · Elapsed Time, Calendars and Timetables: '+q(4)+'\nMission 5 · Unit 4 Challenge: '+q(5)+'\n\nTotal questions: '+sum+' / '+all}
 function confetti(){for(let i=0;i<18;i++){const e=document.createElement('div');e.className='conf';e.textContent=['⭐','🎉','✨','🌟'][i%4];e.style.left=Math.random()*100+'vw';e.style.animationDelay=(Math.random()*.4)+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),2200)}}
-function showResult(){const pg=document.body.dataset.page||'map',one=pg==='map'?0:+pg.slice(1);const txt=resultText(one);const w=document.getElementById('wa');if(w)w.href='https://wa.me/201026794126?text='+encodeURIComponent(txt);document.getElementById('resulttext').textContent=txt;if(one){const h=document.querySelector('#resultcard h2'),p=document.querySelector('#resultcard p');if(h)h.textContent='Send this mission\'s result to Miss Eman';if(p)p.textContent='Finished this mission? Type your name at the top, then press the green button.';const wa=document.getElementById('wa');if(wa)wa.textContent='Send this mission to Miss Eman (WhatsApp)'}document.getElementById('resultcard').classList.add('show')}
+function showResult(){const pg=document.body.dataset.page||'map',one=pg==='map'?0:+pg.slice(1);const txt=resultText(one);const w=document.getElementById('wa');if(w)w.href='https://wa.me/201026794126?text='+encodeURIComponent(txt);document.getElementById('resulttext').textContent=txt;if(one){const h=document.querySelector('#resultcard h2'),p=document.querySelector('#resultcard p');if(h)h.textContent='Send this mission\'s result to Miss Eman';if(p)p.textContent='Finished this mission? Type your name at the top, then press the green button.';const wa=document.getElementById('wa');if(wa)wa.textContent='Send this mission to Miss Eman (WhatsApp)';const cp=document.getElementById('copyres');if(cp)cp.textContent='Copy my result'}document.getElementById('resultcard').classList.add('show')}
 let dbRef=null,saveTimer=null;
 function queueSave(){showResult();if(!dbRef)return;clearTimeout(saveTimer);saveTimer=setTimeout(()=>{dbRef.set({name:myName(),solved:R.solved,total:R.total,race:R.race,mem:R.mem,drag:R.drag,updated:Date.now()}).catch(()=>{})},1200)}
 document.getElementById('copyres').onclick=()=>{const pg=document.body.dataset.page||'map',t=resultText(pg==='map'?0:+pg.slice(1)),fb=document.getElementById('copyfb');
@@ -380,4 +380,9 @@ updateScore();
   }catch(e){}
 })();
 showResult();
+
+/* floating send button + version */
+(function(){const b=document.createElement('button');b.type='button';b.id='fsend';b.textContent='📤 Send my result';
+b.onclick=()=>{const c=document.getElementById('resultcard');if(c){c.classList.add('show');c.scrollIntoView({behavior:'smooth',block:'center'})}};document.body.appendChild(b);
+const f=document.querySelector('footer');if(f){const v=document.createElement('div');v.style.cssText='font-size:11px;opacity:.6;margin-top:8px';v.textContent='Version 3';f.appendChild(v)}})();
 })();

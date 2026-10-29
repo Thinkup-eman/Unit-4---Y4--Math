@@ -197,3 +197,5 @@ input[type=text]{border:3px solid #14324B;border-radius:12px;background:#fff}
 
 .q,.g{position:relative}
 .q::after,.g::after{content:"";position:absolute;right:10px;bottom:8px;width:58px;height:40px;background:url(brain.png) center/contain no-repeat;opacity:.16;pointer-events:none}
+
+#fsend{position:fixed;right:14px;bottom:14px;z-index:60;background:#25D366;color:#fff;border:3px solid #14324B;border-radius:99px;padding:10px 18px;font-size:16px;box-shadow:0 4px 0 #14324B}
