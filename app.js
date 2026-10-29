@@ -214,9 +214,12 @@ document.getElementById('artog').onclick=()=>{const h=document.body.classList.to
 const nmEl=document.getElementById('nm');nmEl.value=ls('t4name')||'';
 nmEl.addEventListener('input',()=>{ls('t4name',nmEl.value);queueSave()});
 const myName=()=>(nmEl.value||'').trim()||'Student';
-function resultText(){return 'ThinkUp Year 4 · Unit 4 Time\nName: '+myName()+'\nQuestions solved: '+R.solved+' / '+R.total+'\nTime Race best: '+(R.race||'not played')+'\nMemory Match: '+(R.mem?R.mem+' moves':'not played')+'\nDrag the Clock: '+R.drag+' / 5 rounds'}
+function resultText(){const nm=n=>+ls('t4m'+n)||0;const tot=k=>secCount[k]||0;
+  const q=n=>{const m=MIS.find(x=>x.n===n);return nm(n)+' / '+m.secs.reduce((s,k)=>s+tot(k),0)};
+  const sum=[1,2,4,5].reduce((s,n)=>s+nm(n),0),all=[1,2,4,5].reduce((s,n)=>s+MIS.find(x=>x.n===n).secs.reduce((t,k)=>t+tot(k),0),0);
+  return 'ThinkUp Year 4 · Unit 4 Time\nName: '+myName()+'\n\nMission 1 · Time Units and the 24-hour Clock: '+q(1)+'\nMission 2 · Clock Studio: '+q(2)+' · Drag the Clock: '+(R.drag||0)+' / 5 rounds\nMission 3 · Speed and Memory: Time Race best score '+(R.race||'not played')+' · Memory Match '+(R.mem?R.mem+' moves':'not played')+'\nMission 4 · Elapsed Time, Calendars and Timetables: '+q(4)+'\nMission 5 · Unit 4 Challenge: '+q(5)+'\n\nTotal questions: '+sum+' / '+all}
 function confetti(){for(let i=0;i<18;i++){const e=document.createElement('div');e.className='conf';e.textContent=['⭐','🎉','✨','🌟'][i%4];e.style.left=Math.random()*100+'vw';e.style.animationDelay=(Math.random()*.4)+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),2200)}}
-function showResult(){const w=document.getElementById('wa');if(w)w.href='https://wa.me/201026794126?text='+encodeURIComponent(resultText());document.getElementById('resulttext').textContent=resultText();document.getElementById('resultcard').classList.add('show')}
+function showResult(){if(document.body.dataset.page&&document.body.dataset.page!=='map')return;const w=document.getElementById('wa');if(w)w.href='https://wa.me/201026794126?text='+encodeURIComponent(resultText());document.getElementById('resulttext').textContent=resultText();document.getElementById('resultcard').classList.add('show')}
 let dbRef=null,saveTimer=null;
 function queueSave(){showResult();if(!dbRef)return;clearTimeout(saveTimer);saveTimer=setTimeout(()=>{dbRef.set({name:myName(),solved:R.solved,total:R.total,race:R.race,mem:R.mem,drag:R.drag,updated:Date.now()}).catch(()=>{})},1200)}
 document.getElementById('copyres').onclick=()=>{const t=resultText(),fb=document.getElementById('copyfb');
@@ -298,7 +301,7 @@ function updateScore(){
   document.getElementById('barfill').style.width=(100*_d/Math.max(1,_t))+'%';
   SECTIONS.forEach(s=>{const a=document.getElementById('chip-'+s.id);if(a)a.classList.toggle('done',secDone[s.id]===secCount[s.id]);const c=document.getElementById('cnt-'+s.id);if(c)c.textContent=secDone[s.id]+' / '+secCount[s.id]});
   if(typeof MIS!=='undefined')MIS.forEach(m=>{let d=0,t=0;m.secs&&m.secs.forEach(k=>{d+=secDone[k];t+=secCount[k]});const sv=+ls('t4m'+m.n)||0;if(!CUR||CUR.n!==m.n)d=sv;const e=document.getElementById('st-'+m.n);if(e&&t)e.textContent=d+' / '+t+(d===t?' ★ complete':' questions')});
-  MIS.forEach(m=>{if(!m.secs)return;let d=0;m.secs.forEach(k=>d+=secDone[k]);if(CUR&&CUR.n===m.n)ls('t4m'+m.n,d)});
+  MIS.forEach(m=>{if(!m.secs)return;let d=0;m.secs.forEach(k=>d+=secDone[k]);if(CUR&&CUR.n===m.n&&d>(+ls('t4m'+m.n)||0))ls('t4m'+m.n,d)});
   R.solved=solved;R.total=QS.length;queueSave();
   if(_t>0&&_d===_t)document.getElementById('win').classList.add('show');
 }
@@ -372,7 +375,7 @@ updateScore();
         db.collection('results').orderBy('updated','desc').onSnapshot(snap=>{body.innerHTML='';snap.docs.forEach(d=>{const x=d.data();const tr=document.createElement('tr');
           [x.name||'?',(x.solved||0)+' / '+(x.total||0),x.race||'–',x.mem||'–',(x.drag||0)+' / 5',x.updated?new Date(x.updated).toLocaleString():''].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});body.append(tr)});
           if(!snap.docs.length){const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=6;td.textContent='No results yet.';tr.append(td);body.append(tr)}},()=>{})}
-    }else{note.hidden=false;note.textContent='Type your name, play, then press "Copy my result" at the bottom and send it to your teacher.'}
+    }else{note.hidden=false;note.textContent='Type your name, play all the missions, then come back to the Mission Map and press the green button to send ALL your results to Miss Eman.'}
   }catch(e){}
 })();
 showResult();
