@@ -190,3 +190,11 @@ input[type=text]{border:3px solid #14324B;border-radius:12px;background:#fff}
 .wm img{width:min(72vw,420px);opacity:.13;mix-blend-mode:multiply}
 .tfoot{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:40px}.tfoot img{height:44px;background:#fff;border:3px solid #14324B;border-radius:14px;padding:4px 12px}
 .mhead{display:flex;align-items:center;gap:10px;margin-top:10px;background:#fff;border:3px solid #14324B;border-radius:18px;padding:6px 12px;box-shadow:0 3px 0 #14324B}.mhead img{height:26px}.mhead span{font-family:var(--display);font-weight:700;color:#14324B}
+
+/* ThinkUp identity */
+.wm img{width:min(86vw,520px);opacity:.15;mix-blend-mode:normal}
+.tulogo{background:#fff;padding:8px 16px}.tulogo img{height:46px}
+.gribbon{display:flex;align-items:center;gap:10px;margin:-16px -16px 12px;padding:8px 14px;background:linear-gradient(90deg,#14324B,#1F7A7A);border-radius:18px 18px 0 0;color:#fff;font-family:var(--display);font-weight:600}
+.gribbon img{height:26px;background:#fff;border-radius:10px;padding:3px 8px}.gribbon span{color:#FFD25E;font-size:15px}
+.q,.g{position:relative}
+.q::after,.g::after{content:"";position:absolute;right:10px;bottom:8px;width:58px;height:40px;background:url(brain.png) center/contain no-repeat;opacity:.16;pointer-events:none}

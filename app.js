@@ -225,7 +225,7 @@ document.getElementById('copyres').onclick=()=>{const t=resultText(),fb=document
 
 /* ---------- games ---------- */
 const gamesEl=document.getElementById('games');
-function gcard(title,pill,desc,ar,em){const g=document.createElement('div');g.className='g';g.innerHTML='<h3><span class="mascot" style="font-size:34px">'+em+'</span>'+title+' <span class="pill">'+pill+'</span></h3><div class="gtip">'+desc+(ar?'<div class="ar" lang="ar">'+ar+'</div>':'')+'</div><div class="gbody"></div>';gamesEl.appendChild(g);return g.querySelector('.gbody')}
+function gcard(title,pill,desc,ar,em){const g=document.createElement('div');g.className='g';g.innerHTML='<div class="gribbon"><img alt="ThinkUp" src="logo.png"><span>ThinkUp Games · Think Better. Aim Higher.</span></div><h3><span class="mascot" style="font-size:34px">'+em+'</span>'+title+' <span class="pill">'+pill+'</span></h3><div class="gtip">'+desc+(ar?'<div class="ar" lang="ar">'+ar+'</div>':'')+'</div><div class="gbody"></div>';gamesEl.appendChild(g);return g.querySelector('.gbody')}
 const mkbtn=(t,fn,cls)=>{const b=document.createElement('button');b.type='button';b.textContent=t;if(cls)b.className=cls;b.onclick=fn;return b};
 
 /* Game 1: drag the clock */
